@@ -1,0 +1,49 @@
+#!/bin/bash
+# Free Code Camp install script
+
+#change to the root directory
+cd
+
+if [ "$2" != ""]; then
+  echo "switching to the right directory"
+  cd $2
+fi
+
+echo "cloning the FCC and COM1000 repos"
+# Clone the free code camp repository
+git clone https://github.com/patsul12/FreeCodeCamp
+
+# Clone the COM1000 repository
+git clone https://github.com/FreeCodeCamp/COM1000
+
+echo "installing bower and gulp"
+# globally install the required packages
+npm install -g bower
+npm install -g gulp
+
+cd FreeCodeCamp
+
+echo "FCC - installing the required packages"
+npm install
+bower install
+
+cd ..
+cd COM1000
+
+echo "COM1000 - installing the required packages"
+npm install
+npm run build
+
+cd ..
+
+echo "FCC and COM1000 installed locally"
+
+cd
+
+echo "installing mongod in your root directory"
+brew install mongod
+mkdir data
+mkdir data/db
+xterm -e mongod --dbpath ~/data/db
+
+exit
